@@ -1,0 +1,17 @@
+<div class="demo">
+  <h2>GraphQL Demo</h2>
+  <p>Endpoint: <code>http://localhost:3000</code></p>
+
+  @if (result$ | async; as result) {
+    @if (result.loading) {
+      <p class="loading">Loading...</p>
+    } @else if (result.error) {
+      <div class="error">
+        <p><strong>Error:</strong> {{ result.error.message }}</p>
+      </div>
+    } @else if (result.data) {
+      <pre class="data">{{ result.data | json }}</pre>
+      <p class="hint">Update <code>GET_DATA</code> in graphql-demo.component.ts to query your API.</p>
+    }
+  }
+</div>

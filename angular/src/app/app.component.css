@@ -1,0 +1,20 @@
+nav {
+  margin-bottom: 2rem;
+}
+
+nav a {
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #1976d2;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  background: rgba(25, 118, 210, 0.08);
+}
+
+nav a.active {
+  background: #1976d2;
+  color: white;
+}

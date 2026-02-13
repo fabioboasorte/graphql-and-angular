@@ -1,0 +1,13 @@
+<div class="page">
+  <h2>All Data</h2>
+
+  @if (result$ | async; as result) {
+    @if (result.loading) {
+      <p class="loading">Loading...</p>
+    } @else if (result.error) {
+      <p class="error">{{ result.error.message }}</p>
+    } @else if (result.data) {
+      <pre class="raw">{{ result.data | json }}</pre>
+    }
+  }
+</div>

@@ -1,0 +1,54 @@
+<div class="page">
+  <h2>Add New User</h2>
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" />
+      @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+        <span class="error-text">Name is required</span>
+      }
+    </div>
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" type="text" formControlName="username" />
+      @if (userForm.get('username')?.invalid && userForm.get('username')?.touched) {
+        <span class="error-text">Username is required</span>
+      }
+    </div>
+    <div class="field">
+      <label for="age">Age</label>
+      <input id="age" type="number" formControlName="age" min="1" max="150" />
+      @if (userForm.get('age')?.invalid && userForm.get('age')?.touched) {
+        <span class="error-text">Age must be between 1 and 150</span>
+      }
+    </div>
+    <div class="field">
+      <label for="nationality">Nationality</label>
+      <select id="nationality" formControlName="nationality" (change)="onNationalityChange($any($event.target).value)">
+        <option value="">Select nationality</option>
+        @for (nat of (nationalities$ | async)?.data?.nationalities ?? []; track nat) {
+          <option [value]="nat">{{ nat }}</option>
+        }
+        <option value="__other__">Other (type below)</option>
+      </select>
+      @if (showCustomNationality) {
+        <input type="text" formControlName="customNationality" placeholder="Enter nationality" class="custom-input" />
+      }
+      @if (!showCustomNationality && userForm.get('nationality')?.invalid && userForm.get('nationality')?.touched) {
+        <span class="error-text">Nationality is required</span>
+      }
+      @if (showCustomNationality && userForm.get('customNationality')?.touched && !userForm.get('customNationality')?.value?.trim()) {
+        <span class="error-text">Please enter a nationality</span>
+      }
+    </div>
+    <div class="actions">
+      <button type="submit" [disabled]="!isFormValid">Add User</button>
+      <a routerLink="/users" class="btn-link">Cancel</a>
+    </div>
+  </form>
+</div>

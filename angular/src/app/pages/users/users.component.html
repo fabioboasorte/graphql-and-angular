@@ -1,0 +1,27 @@
+<div class="page">
+  <div class="header">
+    <h2>All Users</h2>
+    <a routerLink="/users/new" class="add-btn">+ Add User</a>
+  </div>
+
+  @if (result$ | async; as result) {
+    @if (result.loading) {
+      <p class="loading">Loading...</p>
+    } @else if (result.error) {
+      <p class="error">{{ result.error.message }}</p>
+    } @else if (result.data && result.data.users) {
+      <ul class="list">
+        @for (user of result.data.users; track user.id) {
+          <li>
+            <strong>{{ user.name }}</strong><span>&nbsp;</span>
+            <span class="username">{{ '@' + user.username }},</span><span>&nbsp;</span>
+            <span class="meta"><span style="color: green;">{{ user.age }}yo</span>, {{ user.nationality }}</span>
+            <span>&nbsp;</span><a [routerLink]="['/users', user.id, 'edit']" class="edit-link">Edit</a>
+          </li>
+        }
+      </ul>
+    } @else {
+      <pre class="raw">{{ result.data | json }}</pre>
+    }
+  }
+</div>

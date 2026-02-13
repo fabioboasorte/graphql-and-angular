@@ -1,0 +1,54 @@
+<div class="page">
+  <h2>Edit User</h2>
+
+  @if (result$ | async; as result) {
+    @if (result.loading) {
+      <p class="loading">Loading...</p>
+    } @else if (result.error) {
+      <p class="error">{{ result.error.message }}</p>
+    } @else if (result.data?.user) {
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" type="text" formControlName="name" />
+          @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+            <span class="error-text">Name is required</span>
+          }
+        </div>
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" type="text" formControlName="username" />
+          @if (userForm.get('username')?.invalid && userForm.get('username')?.touched) {
+            <span class="error-text">Username is required</span>
+          }
+        </div>
+        <div class="field">
+          <label for="age">Age</label>
+          <input id="age" type="number" formControlName="age" min="1" max="150" />
+          @if (userForm.get('age')?.invalid && userForm.get('age')?.touched) {
+            <span class="error-text">Age must be between 1 and 150</span>
+          }
+        </div>
+        <div class="field">
+          <label for="nationality">Nationality</label>
+          <select id="nationality" formControlName="nationality">
+            <option value="">Select nationality</option>
+            @for (nat of (nationalities$ | async)?.data?.nationalities ?? []; track nat) {
+              <option [value]="nat">{{ nat }}</option>
+            }
+          </select>
+          @if (userForm.get('nationality')?.invalid && userForm.get('nationality')?.touched) {
+            <span class="error-text">Nationality is required</span>
+          }
+        </div>
+        <div class="actions">
+          <button type="submit" [disabled]="userForm.invalid">Save</button>
+          <a routerLink="/users" class="btn-link">Cancel</a>
+        </div>
+      </form>
+    } @else {
+      <p class="error">User not found</p>
+      <a routerLink="/users">Back to users</a>
+    }
+  }
+</div>
