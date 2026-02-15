@@ -16,8 +16,28 @@ describe("GraphQL Query Resolvers", () => {
   describe("users", () => {
     it("returns all users from the database", async () => {
       const mockUsers = [
-        { id: 1, name: "John Doe", username: "john_doe", age: 30, nationality: "American" },
-        { id: 2, name: "Jane Doe", username: "jane_doe", age: 28, nationality: "Canadian" },
+        {
+          id: 1,
+          name: "John Doe",
+          username: "john_doe",
+          age: 30,
+          nationality: "American",
+          street: "123 Main St",
+          city: "Anytown",
+          state: "CA",
+          zip: "12345",
+        },
+        {
+          id: 2,
+          name: "Jane Doe",
+          username: "jane_doe",
+          age: 28,
+          nationality: "Canadian",
+          street: "456 Main St",
+          city: "Anytown",
+          state: "CA",
+          zip: "12345",
+        },
       ];
       mockQuery.mockResolvedValue([mockUsers, []]);
 
@@ -26,7 +46,7 @@ describe("GraphQL Query Resolvers", () => {
       expect(result).toEqual(mockUsers);
       expect(mockQuery).toHaveBeenCalledTimes(1);
       expect(mockQuery).toHaveBeenCalledWith(
-        "SELECT id, name, username, age, nationality FROM users"
+        expect.stringContaining("FROM users LEFT JOIN address")
       );
     });
 
@@ -37,7 +57,7 @@ describe("GraphQL Query Resolvers", () => {
 
       expect(result).toEqual([]);
       expect(mockQuery).toHaveBeenCalledWith(
-        "SELECT id, name, username, age, nationality FROM users"
+        expect.stringContaining("FROM users LEFT JOIN address")
       );
     });
   });
@@ -50,6 +70,10 @@ describe("GraphQL Query Resolvers", () => {
         username: "john_doe",
         age: 30,
         nationality: "American",
+        street: "123 Main St",
+        city: "Anytown",
+        state: "CA",
+        zip: "12345",
       };
       mockQuery.mockResolvedValue([[mockUser], []]);
 
@@ -58,7 +82,7 @@ describe("GraphQL Query Resolvers", () => {
       expect(result).toEqual(mockUser);
       expect(mockQuery).toHaveBeenCalledTimes(1);
       expect(mockQuery).toHaveBeenCalledWith(
-        "SELECT id, name, username, age, nationality FROM users WHERE id = ?",
+        expect.stringContaining("WHERE users.id = ?"),
         ["1"]
       );
     });
@@ -70,7 +94,7 @@ describe("GraphQL Query Resolvers", () => {
 
       expect(result).toBeUndefined();
       expect(mockQuery).toHaveBeenCalledWith(
-        "SELECT id, name, username, age, nationality FROM users WHERE id = ?",
+        expect.stringContaining("WHERE users.id = ?"),
         ["999"]
       );
     });

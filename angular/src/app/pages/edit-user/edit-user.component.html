@@ -41,6 +41,22 @@
             <span class="error-text">Nationality is required</span>
           }
         </div>
+        <div class="field">
+          <label for="street">Street</label>
+          <input id="street" type="text" formControlName="street" />
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <input id="city" type="text" formControlName="city" />
+        </div>
+        <div class="field">
+          <label for="state">State</label>
+          <input id="state" type="text" formControlName="state" />
+        </div>
+        <div class="field">
+          <label for="zip">ZIP</label>
+          <input id="zip" type="text" formControlName="zip" />
+        </div>
         <div class="actions">
           <button type="submit" [disabled]="userForm.invalid">Save</button>
           <a routerLink="/users" class="btn-link">Cancel</a>

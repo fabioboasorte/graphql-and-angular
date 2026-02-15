@@ -5,6 +5,12 @@ const UserList = [
 		username: "john_doe",
 		age: 30,
 		nationality: "American",
+		address: {
+			street: "123 Main St",
+			city: "Anytown",
+			state: "CA",
+			zip: "12345",
+		},
 	},
 	{
 		id: 2,
@@ -12,6 +18,12 @@ const UserList = [
 		username: "jane_doe",
 		age: 28,
 		nationality: "Canadian",
+		address: {
+			street: "456 Main St",
+			city: "Anytown",
+			state: "CA",
+			zip: "12345",
+		},
 	},
 	{
 		id: 3,
@@ -19,6 +31,12 @@ const UserList = [
 		username: "jim_doe",
 		age: 35,
 		nationality: "British",
+		address: {
+			street: "789 Main St",
+			city: "Anytown",
+			state: "CA",
+			zip: "12345",
+		},
 	},
 	{
 		id: 4,
@@ -26,6 +44,12 @@ const UserList = [
 		username: "jill_doe",
 		age: 32,
 		nationality: "Australian",
+		address: {
+			street: "101 Main St",
+			city: "Anytown",
+			state: "CA",
+			zip: "12345",
+		},
 	},
 	{
 		id: 5,
@@ -33,6 +57,12 @@ const UserList = [
 		username: "jack_doe",
 		age: 27,
 		nationality: "New Zealander",
+		address: {
+			street: "123 Main St",
+			city: "Anytown",
+			state: "CA",
+			zip: "12345",
+		},
 	},
 ];
 

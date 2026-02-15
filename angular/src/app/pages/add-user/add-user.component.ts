@@ -1,26 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { AsyncPipe } from '@angular/common';
-
-const ADD_USER = gql`
-  mutation AddUser($input: AddUserInput!) {
-    addUser(input: $input) {
-      id
-      name
-      username
-      age
-      nationality
-    }
-  }
-`;
-
-const GET_NATIONALITIES = gql`
-  query GetNationalities {
-    nationalities
-  }
-`;
+import { ADD_USER, GET_NATIONALITIES } from '../../graphql';
 
 @Component({
   selector: 'app-add-user',
@@ -30,9 +13,9 @@ const GET_NATIONALITIES = gql`
   styleUrl: './add-user.component.css',
 })
 export class AddUserComponent {
-  private router = inject(Router);
-  private apollo = inject(Apollo);
-  private fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly apollo = inject(Apollo);
+  private readonly fb = inject(FormBuilder);
 
   nationalities$ = this.apollo
     .watchQuery<{ nationalities: string[] }>({ query: GET_NATIONALITIES })
@@ -44,6 +27,10 @@ export class AddUserComponent {
     age: [0, [Validators.required, Validators.min(1), Validators.max(150)]],
     nationality: ['', Validators.required],
     customNationality: [''],
+    street: ['', Validators.required],
+    city: ['', Validators.required],
+    state: ['', Validators.required],
+    zip: ['', Validators.required],
   });
 
   errorMessage = '';
@@ -56,7 +43,14 @@ export class AddUserComponent {
   get isFormValid(): boolean {
     const raw = this.userForm.getRawValue();
     const nationality = raw.nationality === '__other__' ? raw.customNationality?.trim() : raw.nationality;
-    const baseValid = this.userForm.get('name')?.valid && this.userForm.get('username')?.valid && this.userForm.get('age')?.valid;
+    const baseValid =
+      this.userForm.get('name')?.valid &&
+      this.userForm.get('username')?.valid &&
+      this.userForm.get('age')?.valid &&
+      this.userForm.get('street')?.valid &&
+      this.userForm.get('city')?.valid &&
+      this.userForm.get('state')?.valid &&
+      this.userForm.get('zip')?.valid;
     return !!(baseValid && nationality);
   }
 
@@ -70,6 +64,12 @@ export class AddUserComponent {
       username: raw.username,
       age: raw.age,
       nationality,
+      address: {
+        street: raw.street!,
+        city: raw.city!,
+        state: raw.state!,
+        zip: raw.zip!,
+      },
     };
     this.apollo
       .mutate({

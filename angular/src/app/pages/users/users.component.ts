@@ -1,31 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Apollo, gql } from 'apollo-angular';
-
-const GET_USERS = gql`
-  query GetUsers {
-    users {
-      id
-      name
-      username
-      age
-      nationality
-    }
-  }
-`;
-
-interface User {
-  id: string;
-  name: string;
-  username: string;
-  age: number;
-  nationality: string;
-}
-
-interface GetUsersResponse {
-  users: User[];
-}
+import { Apollo } from 'apollo-angular';
+import { GetUsersResponse } from '../../models';
+import { GET_USERS } from '../../graphql';
 
 @Component({
   selector: 'app-users',

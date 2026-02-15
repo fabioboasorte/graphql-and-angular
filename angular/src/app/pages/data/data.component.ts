@@ -1,18 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Apollo, gql } from 'apollo-angular';
-
-const GET_ALL_DATA = gql`
-  query GetAllData {
-    users {
-      id
-      name
-      username
-      age
-      nationality
-    }
-  }
-`;
+import { Apollo } from 'apollo-angular';
+import { GetUsersResponse } from '../../models';
+import { GET_ALL_DATA } from '../../graphql';
 
 @Component({
   selector: 'app-data',
@@ -23,5 +13,5 @@ const GET_ALL_DATA = gql`
 export class DataComponent {
   private apollo = inject(Apollo);
 
-  result$ = this.apollo.watchQuery({ query: GET_ALL_DATA }).valueChanges;
+  result$ = this.apollo.watchQuery<GetUsersResponse>({ query: GET_ALL_DATA }).valueChanges;
 }

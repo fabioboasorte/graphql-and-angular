@@ -5,6 +5,14 @@ const typeDefs = `#graphql
 		username: String!
 		age: Int!
 		nationality: String!
+		address: Address
+	}
+
+	type Address {
+		street: String!
+		city: String!
+		state: String!
+		zip: String!
 	}
 
 	input AddUserInput {
@@ -12,6 +20,21 @@ const typeDefs = `#graphql
 		username: String!
 		age: Int!
 		nationality: String!
+		address: AddressInput!
+	}
+
+	input AddressInput {
+		street: String!
+		city: String!
+		state: String!
+		zip: String!
+	}
+
+	input UpdateAddressInput {
+		street: String
+		city: String
+		state: String
+		zip: String
 	}
 
 	input UpdateUserInput {
@@ -19,6 +42,7 @@ const typeDefs = `#graphql
 		username: String
 		age: Int
 		nationality: String
+		address: UpdateAddressInput
 	}
 
 	type Query {
@@ -30,6 +54,7 @@ const typeDefs = `#graphql
 	type Mutation {
 		addUser(input: AddUserInput!): User!
 		updateUser(id: ID!, input: UpdateUserInput!): User!
+		deleteUser(id: ID!): ID!
 	}
 `;
 

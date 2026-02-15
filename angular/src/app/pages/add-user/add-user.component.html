@@ -46,6 +46,34 @@
         <span class="error-text">Please enter a nationality</span>
       }
     </div>
+    <div class="field">
+      <label for="street">Street</label>
+      <input id="street" type="text" formControlName="street" />
+      @if (userForm.get('street')?.invalid && userForm.get('street')?.touched) {
+        <span class="error-text">Street is required</span>
+      }
+    </div>
+    <div class="field">
+      <label for="city">City</label>
+      <input id="city" type="text" formControlName="city" />
+      @if (userForm.get('city')?.invalid && userForm.get('city')?.touched) {
+        <span class="error-text">City is required</span>
+      }
+    </div>
+    <div class="field">
+      <label for="state">State</label>
+      <input id="state" type="text" formControlName="state" />
+      @if (userForm.get('state')?.invalid && userForm.get('state')?.touched) {
+        <span class="error-text">State is required</span>
+      }
+    </div>
+    <div class="field">
+      <label for="zip">ZIP</label>
+      <input id="zip" type="text" formControlName="zip" />
+      @if (userForm.get('zip')?.invalid && userForm.get('zip')?.touched) {
+        <span class="error-text">ZIP is required</span>
+      }
+    </div>
     <div class="actions">
       <button type="submit" [disabled]="!isFormValid">Add User</button>
       <a routerLink="/users" class="btn-link">Cancel</a>

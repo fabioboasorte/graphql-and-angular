@@ -10,6 +10,12 @@ const GET_USERS = gql`
       username
       age
       nationality
+      address {
+        street
+        city
+        state
+        zip
+      }
     }
   }
 `;
@@ -22,6 +28,12 @@ const ADD_USER = gql`
       username
       age
       nationality
+      address {
+        street
+        city
+        state
+        zip
+      }
     }
   }
 `;
@@ -35,18 +47,20 @@ function UserList() {
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
   const [nationality, setNationality] = useState("");
-
+  const [address, setAddress] = useState({ street: "", city: "", state: "", zip: "" });
+  
   const handleAddUser = (e) => {
     e.preventDefault();
     addUser({
       variables: {
-        input: { name, username, age: parseInt(age), nationality },
+        input: { name, username, age: parseInt(age), nationality, address },
       },
     });
     setName("");
     setUsername("");
     setAge("");
     setNationality("");
+    setAddress({ street: "", city: "", state: "", zip: "" });
   };
 
   if (loading) return <p>Loading...</p>;
@@ -59,6 +73,8 @@ function UserList() {
         {data?.users?.map((user) => (
           <li key={user.id}>
             {user.name} (@{user.username}) - {user.age} - {user.nationality}
+            <br />
+            {user.address.street} - {user.address.city} - {user.address.state} - {user.address.zip}
           </li>
         ))}
       </ul>
@@ -88,6 +104,30 @@ function UserList() {
           placeholder="Nationality"
           value={nationality}
           onChange={(e) => setNationality(e.target.value)}
+          required
+        />
+        <input
+          placeholder="Street"
+          value={address.street}
+          onChange={(e) => setAddress({ ...address, street: e.target.value })}
+          required
+        />
+        <input
+          placeholder="City"
+          value={address.city}
+          onChange={(e) => setAddress({ ...address, city: e.target.value })}
+          required
+        />
+        <input
+          placeholder="State"
+          value={address.state}
+          onChange={(e) => setAddress({ ...address, state: e.target.value })}
+          required
+        />
+        <input
+          placeholder="Zip"
+          value={address.zip}
+          onChange={(e) => setAddress({ ...address, zip: e.target.value })}
           required
         />
         <button type="submit">Add</button>

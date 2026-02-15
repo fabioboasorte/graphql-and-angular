@@ -1,13 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Apollo, gql } from 'apollo-angular';
-
-/** Replace with your API's query. Example: query { users { id name } } */
-const GET_DATA = gql`
-  query {
-    __typename
-  }
-`;
+import { Apollo } from 'apollo-angular';
+import { GET_DATA } from '../../graphql';
 
 @Component({
   selector: 'app-graphql-demo',

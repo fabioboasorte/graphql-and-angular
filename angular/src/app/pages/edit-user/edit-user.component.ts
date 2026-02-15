@@ -1,47 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { AsyncPipe } from '@angular/common';
 import { switchMap } from 'rxjs';
-
-const GET_USER = gql`
-  query GetUser($id: ID!) {
-    user(id: $id) {
-      id
-      name
-      username
-      age
-      nationality
-    }
-  }
-`;
-
-const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
-      id
-      name
-      username
-      age
-      nationality
-    }
-  }
-`;
-
-const GET_NATIONALITIES = gql`
-  query GetNationalities {
-    nationalities
-  }
-`;
-
-interface User {
-  id: string;
-  name: string;
-  username: string;
-  age: number;
-  nationality: string;
-}
+import { User } from '../../models';
+import { GET_USER, GET_NATIONALITIES, UPDATE_USER } from '../../graphql';
 
 @Component({
   selector: 'app-edit-user',
@@ -65,6 +29,10 @@ export class EditUserComponent implements OnInit {
     username: ['', Validators.required],
     age: [0, [Validators.required, Validators.min(1), Validators.max(150)]],
     nationality: ['', Validators.required],
+    street: [''],
+    city: [''],
+    state: [''],
+    zip: [''],
   });
 
   result$ = this.route.paramMap.pipe(
@@ -81,11 +49,16 @@ export class EditUserComponent implements OnInit {
     this.result$.subscribe(({ data }) => {
       if (data?.user) {
         const user = data.user;
+        const addr = user.address;
         this.userForm.patchValue({
           name: user.name,
           username: user.username,
           age: user.age,
           nationality: user.nationality,
+          street: addr?.street ?? '',
+          city: addr?.city ?? '',
+          state: addr?.state ?? '',
+          zip: addr?.zip ?? '',
         });
       }
     });
@@ -94,7 +67,19 @@ export class EditUserComponent implements OnInit {
   onSubmit() {
     if (this.userForm.invalid) return;
     const id = this.route.snapshot.paramMap.get('id') ?? '';
-    const input = this.userForm.getRawValue();
+    const raw = this.userForm.getRawValue();
+    const input = {
+      name: raw.name,
+      username: raw.username,
+      age: raw.age,
+      nationality: raw.nationality,
+      address: {
+        street: raw.street,
+        city: raw.city,
+        state: raw.state,
+        zip: raw.zip,
+      },
+    };
     this.apollo
       .mutate({
         mutation: UPDATE_USER,

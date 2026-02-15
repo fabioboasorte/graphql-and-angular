@@ -12,6 +12,16 @@ CREATE TABLE IF NOT EXISTS users (
   nationality VARCHAR(255) NOT NULL
 );
 
+-- Create address table
+CREATE TABLE IF NOT EXISTS address (
+  user_id INT PRIMARY KEY,
+  street VARCHAR(255) NOT NULL,
+  city VARCHAR(255) NOT NULL,
+  state VARCHAR(255) NOT NULL,
+  zip VARCHAR(255) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 -- Insert mock data
 INSERT INTO users (id, name, username, age, nationality) VALUES
   (1, 'John Doe', 'john_doe', 30, 'American'),
@@ -24,3 +34,11 @@ ON DUPLICATE KEY UPDATE
   username = VALUES(username),
   age = VALUES(age),
   nationality = VALUES(nationality);
+
+-- Insert address data
+INSERT INTO address (user_id, street, city, state, zip) VALUES
+  (1, '123 Main St', 'Anytown', 'CA', '12345'),
+  (2, '456 Main St', 'Anytown', 'CA', '12345'),
+  (3, '789 Main St', 'Anytown', 'CA', '12345'),
+  (4, '101 Main St', 'Anytown', 'CA', '12345'),
+  (5, '123 Main St', 'Anytown', 'CA', '12345');
