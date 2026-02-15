@@ -8,6 +8,7 @@ export const GET_USERS = gql`
       username
       age
       nationality
+      phone
     }
   }
 `;
@@ -20,6 +21,7 @@ export const GET_USER = gql`
       username
       age
       nationality
+      phone
       address {
         street
         city
@@ -38,6 +40,7 @@ export const GET_ALL_DATA = gql`
       username
       age
       nationality
+      phone
       address {
         street
         city
@@ -62,6 +65,7 @@ export const ADD_USER = gql`
       username
       age
       nationality
+      phone
       address {
         street
         city
@@ -80,6 +84,7 @@ export const UPDATE_USER = gql`
       username
       age
       nationality
+      phone
       address {
         street
         city

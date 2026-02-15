@@ -27,6 +27,7 @@ export class AddUserComponent {
     age: [0, [Validators.required, Validators.min(1), Validators.max(150)]],
     nationality: ['', Validators.required],
     customNationality: [''],
+    phone: [''],
     street: ['', Validators.required],
     city: ['', Validators.required],
     state: ['', Validators.required],
@@ -64,6 +65,7 @@ export class AddUserComponent {
       username: raw.username,
       age: raw.age,
       nationality,
+      phone: raw.phone?.trim() || null,
       address: {
         street: raw.street!,
         city: raw.city!,

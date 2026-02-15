@@ -11,6 +11,7 @@ export interface User {
   username: string;
   age: number;
   nationality: string;
+  phone?: string | null;
   address?: Address | null;
 }
 

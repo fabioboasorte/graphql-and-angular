@@ -5,6 +5,7 @@ const typeDefs = `#graphql
 		username: String!
 		age: Int!
 		nationality: String!
+		phone: String
 		address: Address
 	}
 
@@ -20,6 +21,7 @@ const typeDefs = `#graphql
 		username: String!
 		age: Int!
 		nationality: String!
+		phone: String
 		address: AddressInput!
 	}
 
@@ -42,6 +44,7 @@ const typeDefs = `#graphql
 		username: String
 		age: Int
 		nationality: String
+		phone: String
 		address: UpdateAddressInput
 	}
 

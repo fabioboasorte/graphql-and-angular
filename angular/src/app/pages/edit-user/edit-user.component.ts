@@ -29,6 +29,7 @@ export class EditUserComponent implements OnInit {
     username: ['', Validators.required],
     age: [0, [Validators.required, Validators.min(1), Validators.max(150)]],
     nationality: ['', Validators.required],
+    phone: [''],
     street: [''],
     city: [''],
     state: [''],
@@ -55,6 +56,7 @@ export class EditUserComponent implements OnInit {
           username: user.username,
           age: user.age,
           nationality: user.nationality,
+          phone: user.phone ?? '',
           street: addr?.street ?? '',
           city: addr?.city ?? '',
           state: addr?.state ?? '',
@@ -73,6 +75,7 @@ export class EditUserComponent implements OnInit {
       username: raw.username,
       age: raw.age,
       nationality: raw.nationality,
+      phone: raw.phone?.trim() || undefined,
       address: {
         street: raw.street,
         city: raw.city,

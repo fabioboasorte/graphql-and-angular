@@ -1,10 +1,15 @@
 <header class="header">
   <div class="header-inner">
-    <a routerLink="/users" class="logo">{{ title }}</a>
-    <nav class="nav">
-      <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Users</a>
-      <a routerLink="/users/new" routerLinkActive="active" class="nav-link">Add User</a>
-      <a routerLink="/data" routerLinkActive="active" class="nav-link">All Data</a>
+    <a routerLink="/users" class="logo" (click)="closeMenu()">{{ title }}</a>
+    <button type="button" class="menu-toggle" aria-label="Toggle menu" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen">
+      <span class="hamburger" [class.open]="menuOpen"></span>
+      <span class="hamburger" [class.open]="menuOpen"></span>
+      <span class="hamburger" [class.open]="menuOpen"></span>
+    </button>
+    <nav class="nav" [class.open]="menuOpen">
+      <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Users</a>
+      <a routerLink="/users/new" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Add User</a>
+      <a routerLink="/data" routerLinkActive="active" class="nav-link" (click)="closeMenu()">All Data</a>
     </nav>
   </div>
 </header>

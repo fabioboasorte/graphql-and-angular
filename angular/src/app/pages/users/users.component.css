@@ -85,6 +85,20 @@
   color: #555;
 }
 
+.card-phone {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-phone-icon {
+  flex-shrink: 0;
+  color: #64748b;
+}
+
 .card-age {
   color: #2e7d32;
   font-weight: 500;

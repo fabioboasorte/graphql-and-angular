@@ -27,6 +27,7 @@ const resolvers = {
         users.username,
         users.age,
         users.nationality,
+        users.phone,
         address.street,
         address.city,
         address.state,
@@ -42,6 +43,7 @@ const resolvers = {
         users.username,
         users.age,
         users.nationality,
+        users.phone,
         address.street,
         address.city,
         address.state,
@@ -63,8 +65,8 @@ const resolvers = {
       const [rows] = await pool.query("SELECT COALESCE(MAX(id), 0) + 1 AS nextId FROM users");
       const nextId = rows[0].nextId;
       await pool.query(
-        "INSERT INTO users (id, name, username, age, nationality) VALUES (?, ?, ?, ?, ?)",
-        [nextId, input.name, input.username, input.age, input.nationality]
+        "INSERT INTO users (id, name, username, age, nationality, phone) VALUES (?, ?, ?, ?, ?, ?)",
+        [nextId, input.name, input.username, input.age, input.nationality, input.phone ?? null]
       );
       await pool.query(
         "INSERT INTO address (user_id, street, city, state, zip) VALUES (?, ?, ?, ?, ?)",
@@ -90,6 +92,10 @@ const resolvers = {
       if (input.nationality !== undefined) {
         userFields.push("nationality = ?");
         userValues.push(input.nationality);
+      }
+      if (input.phone !== undefined) {
+        userFields.push("phone = ?");
+        userValues.push(input.phone);
       }
       if (userFields.length > 0) {
         await pool.query(
@@ -142,7 +148,7 @@ const resolvers = {
         }
       }
       const [[updated]] = await pool.query(
-        `SELECT users.id, users.name, users.username, users.age, users.nationality,
+        `SELECT users.id, users.name, users.username, users.age, users.nationality, users.phone,
          address.street, address.city, address.state, address.zip
          FROM users LEFT JOIN address ON users.id = address.user_id WHERE users.id = ?`,
         [id]
