@@ -1,0 +1,10 @@
+<header class="header">
+  <div class="header-inner">
+    <a routerLink="/users" class="logo">{{ title }}</a>
+    <nav class="nav">
+      <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Users</a>
+      <a routerLink="/users/new" routerLinkActive="active" class="nav-link">Add User</a>
+      <a routerLink="/data" routerLinkActive="active" class="nav-link">All Data</a>
+    </nav>
+  </div>
+</header>

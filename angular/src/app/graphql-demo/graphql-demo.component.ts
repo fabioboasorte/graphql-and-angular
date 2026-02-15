@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Apollo } from 'apollo-angular';
-import { GET_DATA } from '../../graphql';
+import { GET_DATA } from '../graphql';
 
 @Component({
   selector: 'app-graphql-demo',
@@ -10,7 +10,7 @@ import { GET_DATA } from '../../graphql';
   styleUrl: './graphql-demo.component.css',
 })
 export class GraphqlDemoComponent {
-  private apollo = inject(Apollo);
+  private readonly apollo = inject(Apollo);
 
   result$ = this.apollo.watchQuery({ query: GET_DATA }).valueChanges;
 }

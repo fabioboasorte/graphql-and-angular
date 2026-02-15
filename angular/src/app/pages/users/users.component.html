@@ -10,16 +10,24 @@
     } @else if (result.error) {
       <p class="error">{{ result.error.message }}</p>
     } @else if (result.data && result.data.users) {
-      <ul class="list">
+      <div class="cards">
         @for (user of result.data.users; track user.id) {
-          <li>
-            <strong>{{ user.name }}</strong><span>&nbsp;</span>
-            <span class="username">{{ '@' + user.username }},</span><span>&nbsp;</span>
-            <span class="meta"><span style="color: green;">{{ user.age }}yo</span>, {{ user.nationality }}</span>
-            <span>&nbsp;</span><a [routerLink]="['/users', user.id, 'edit']" class="edit-link">Edit</a>
-          </li>
+          <article class="card">
+            <div class="card-body">
+              <h3 class="card-name">{{ user.name }}</h3>
+              <p class="card-username">&#64;{{ user.username }}</p>
+              <div class="card-meta">
+                <span class="card-age">{{ user.age }} years</span>
+                <span class="card-sep">·</span>
+                <span class="card-nationality">{{ user.nationality }}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <a [routerLink]="['/users', user.id, 'edit']" class="card-link">Edit</a>
+            </div>
+          </article>
         }
-      </ul>
+      </div>
     } @else {
       <pre class="raw">{{ result.data | json }}</pre>
     }
